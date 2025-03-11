@@ -28,21 +28,29 @@ The **Complaint-Redressal-System** is designed to help locals report development
 - **Automatic notifications** via Email/SMS when the complaint status updates.
 - **Complaint history** for users to check past complaints.
 
-### 5️⃣ Admin Panel (For Authorities)
+### 5️⃣ Escalation Process:
+- If the issue is not resolved at the first level within the given timeframe, it will be escalated to higher authorities or an appellate body for further action.
+- Transparency is maintained with the user and all the levels of bodies included in the escalation process.
+
+### 6️⃣ Group/Remove Duplicates:
+- Remove duplicate complaints from the same user
+- Group duplicate complaints so they are updated together automatically. 
+
+### 7️⃣ Admin Panel (For Authorities)
 - Authorities log in to **view, manage, and update** complaint statuses.
 - Option to **assign complaints** to specific departments.
 - **View statistics & analytics** (total complaints, resolved complaints, pending issues).
 
-### 6️⃣ User Feedback & Resolution Confirmation
+### 8️⃣ User Feedback & Resolution Confirmation
 - After resolution, users can confirm if the issue is resolved.
 - Option to **provide feedback** and rate the redressal process.
 
-### 7️⃣ Community Discussion Forum (Optional Feature)
+### 9️⃣ Community Discussion Forum (Optional Feature)
 - Users can discuss local issues, **suggest solutions**, and collaborate on community-driven actions.
 - **Upvote/downvote** complaints to prioritize urgent issues.
 
-### 8️⃣ Push Notifications & Alerts
-- **Notify users** about complaint updates.
+### 1️⃣0️⃣ Push Notifications & Alerts
+- **Notify users** about complaint updates/status
 - Send **important announcements** from local authorities.
 
 ---
