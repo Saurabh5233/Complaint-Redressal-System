@@ -99,3 +99,22 @@ Feel free to **contribute** to this project by submitting a pull request or open
 ### 📩 Contact
 For queries, suggestions, or feedback, reach out to us at **[Your Email]**.
 
+Guidance:-
+1. Dashboard from crash as existing are just as a waste. 
+2. Complain status check
+3. Grievances must be accurate as per govt. Position 
+4. Timeline for each escalation like as we move to higher position it should be more time (i.e. if for clerk it must be like 7 days, then SHO like 15 days and if higher to all like collector then around 1 month just for example ) , it should be only of max. Time of 6 months approx of all the Escalation. 
+5. All the escalation and process must be logged for each complain and user 
+6. Authentication can be done by aadhar and phone no. together. 
+7. All offices post details to be known and create a particular id for each officer by our admin 
+8. All help desk contact detail for particular district or taluka
+9. Plan according so to make it for the state and country level too, not to lack till the district. 
+10. After each escalation or query resolved, user must get a sms/email. 
+11. Sms Or alert to the officials on both sides of escalation regarding one has not worked and other is to do it as pior based on queue. 
+12. If complain is not resolved and user wants to file a complain again he/she must have a option to recomplain in attachment to older so to check who has made it in resolved list but yet not resolved. 
+13. Each grievance level should be shown to user and the detail of officer (like phone no./mail or address) .  As the grievance is main task the higher authorities must be able to see the grievance level it has travel so to take actions accordingly. 
+14. Check for the duplicate complains raised from same user and attached them together. 
+15. Create a auto sms Or whatsApp not to answer the user regarding some basic complains which user can do itself. 
+16. Provide language translates to stream for all users. 
+17. For each query or complain provide a token/ticket id to check status. 
+Note:- More info to be passed as upon talk with the consern person and our guide. 
