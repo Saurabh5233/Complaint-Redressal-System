@@ -10,7 +10,7 @@ package-lock.json
 .env.development
 .env.test
 .env.production
-
+firebase-service-account.json
 # Logs
 logs/
 *.log
