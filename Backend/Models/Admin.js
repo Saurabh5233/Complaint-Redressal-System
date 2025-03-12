@@ -1,7 +1,7 @@
 // const mongoose = require('mongoose');
 // const bcrypt = require('bcryptjs');
 
-// const UserSchema = new mongoose.Schema({
+// const AdminSchema = new mongoose.Schema({
 //   name: {
 //     type: String,
 //     required: [true, 'Please provide a name']
@@ -35,6 +35,10 @@
 //     type: Boolean,
 //     default: false
 //   },
+//   role: {
+//     type: String,
+//     default: 'admin'
+//   },
 //   otp: {
 //     code: String,
 //     expiresAt: Date
@@ -46,7 +50,7 @@
 // });
 
 // // Hash password before saving
-// UserSchema.pre('save', async function(next) {
+// AdminSchema.pre('save', async function(next) {
 //   if (!this.isModified('password')) {
 //     next();
 //   }
@@ -56,8 +60,8 @@
 // });
 
 // // Check if password matches
-// UserSchema.methods.matchPassword = async function(enteredPassword) {
+// AdminSchema.methods.matchPassword = async function(enteredPassword) {
 //   return await bcrypt.compare(enteredPassword, this.password);
 // };
 
-// module.exports = mongoose.model('User', UserSchema);
+// module.exports = mongoose.model('Admin', AdminSchema);
