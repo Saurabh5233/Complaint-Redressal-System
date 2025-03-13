@@ -1,67 +1,108 @@
 // const mongoose = require('mongoose');
+// const User = require('./User');
 // const bcrypt = require('bcryptjs');
 
 // const AdminSchema = new mongoose.Schema({
-//   name: {
-//     type: String,
-//     required: [true, 'Please provide a name']
-//   },
-//   email: {
-//     type: String,
-//     required: [true, 'Please provide an email'],
-//     unique: true,
-//     match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please provide a valid email']
-//   },
-//   phone: {
-//     type: String,
-//     unique: true,
-//     sparse: true
-//   },
-//   password: {
-//     type: String,
-//     required: [true, 'Please provide a password'],
-//     minlength: 6,
-//     select: false
-//   },
-//   isVerified: {
-//     type: Boolean,
-//     default: false
-//   },
-//   emailVerified: {
-//     type: Boolean,
-//     default: false
-//   },
-//   phoneVerified: {
-//     type: Boolean,
-//     default: false
-//   },
-//   role: {
-//     type: String,
-//     default: 'admin'
-//   },
-//   otp: {
-//     code: String,
-//     expiresAt: Date
-//   },
-//   createdAt: {
-//     type: Date,
-//     default: Date.now
-//   }
+//     loginOtp: {
+//         code: String,
+//         expiresAt: Date
+//     }
 // });
 
-// // Hash password before saving
-// AdminSchema.pre('save', async function(next) {
-//   if (!this.isModified('password')) {
+// // Set admin type
+// AdminSchema.pre('save', function(next) {
+//     this.__type = 'Admin';
 //     next();
-//   }
-  
-//   const salt = await bcrypt.genSalt(10);
-//   this.password = await bcrypt.hash(this.password, salt);
 // });
 
-// // Check if password matches
-// AdminSchema.methods.matchPassword = async function(enteredPassword) {
-//   return await bcrypt.compare(enteredPassword, this.password);
-// };
+// const Admin = User.discriminator('Admin', AdminSchema);
 
-// module.exports = mongoose.model('Admin', AdminSchema);
+// ------------|||----------
+
+
+
+
+
+const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
+
+const AdminSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: [true, 'Name is required']
+    },
+    email: {
+        type: String,
+        required: [true, 'Email is required'],
+        match: [/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/, 'Please enter a valid email']
+    },
+    phone: {
+        type: String,
+        required: [true, 'Phone number is required'],
+        sparse: true
+    },
+    password: {
+        type: String,
+        required: [true, 'Password is required'],
+        minlength: [6, 'Password must be at least 6 characters'],
+        select: false
+    },
+    role: {
+        type: String,
+        enum: ['admin'],
+        default: 'admin'
+    },
+    emailVerified: {
+        type: Boolean,
+        default: false
+    },
+    phoneVerified: {
+        type: Boolean,
+        default: false
+    },
+    isVerified: {
+        type: Boolean,
+        default: false
+    },
+    otp: {
+        code: String,
+        expiresAt: Date
+    },
+    loginOtp: {
+        code: String,
+        expiresAt: Date
+    }
+}, {
+    timestamps: true,
+});
+
+// Hash password before saving
+AdminSchema.pre('save', async function(next) {
+    if (!this.isModified('password')) {
+        next();
+    }
+    const salt = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(this.password, salt);
+});
+
+// Match password
+AdminSchema.methods.matchPassword = async function(enteredPassword) {
+    return await bcrypt.compare(enteredPassword, this.password);
+};
+
+// Create unique index for email
+AdminSchema.index({ 
+    email: 1
+}, { 
+    unique: true
+});
+
+// Create unique index for phone
+AdminSchema.index({ 
+    phone: 1
+}, { 
+    unique: true,
+    sparse: true
+});
+
+module.exports = mongoose.model('Admin', AdminSchema);
