@@ -1,62 +1,56 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
-const Admin = require('../models/Admin');
 
-const protect = async (req, res, next) => {
-  let token;
-
-  if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
-    try {
-      // Get token from header
-      token = req.headers.authorization.split(' ')[1];
-
-      // Verify token
-      const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
-      // Get user from the token
-      req.user = await User.findById(decoded.id).select('-password');
-
-      next();
-    } catch (error) {
-      console.error(error);
-      res.status(401).json({ success: false, message: 'Not authorized, token failed' });
-    }
-  }
-
-  if (!token) {
-    res.status(401).json({ success: false, message: 'Not authorized, no token' });
-  }
+// Generate JWT Token
+const generateToken = (id) => {
+    return jwt.sign({ id }, process.env.JWT_SECRET, {
+        expiresIn: '30d'
+    });
 };
 
-const adminProtect = async (req, res, next) => {
-  let token;
-
-  if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
+// Authenticate user
+const authenticate = async (req, res, next) => {
     try {
-      // Get token from header
-      token = req.headers.authorization.split(' ')[1];
+        let token;
 
-      // Verify token
-      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
+            token = req.headers.authorization.split(' ')[1];
+        }
 
-      // Get admin from the token
-      const admin = await Admin.findById(decoded.id).select('-password');
-      
-      if (!admin) {
-        return res.status(401).json({ success: false, message: 'Not authorized as admin' });
-      }
-      
-      req.admin = admin;
-      next();
+        if (!token) {
+            return res.status(401).json({ success: false, message: 'Not authorized' });
+        }
+
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        const user = await User.findById(decoded.id);
+
+        if (!user) {
+            return res.status(401).json({ success: false, message: 'User not found' });
+        }
+
+        req.user = user;
+        next();
     } catch (error) {
-      console.error(error);
-      res.status(401).json({ success: false, message: 'Not authorized, token failed' });
+        console.error(error);
+        res.status(401).json({ success: false, message: 'Not authorized' });
     }
-  }
-
-  if (!token) {
-    res.status(401).json({ success: false, message: 'Not authorized, no token' });
-  }
 };
 
-module.exports = { protect, adminProtect };
+// Check if user is admin
+const isAdmin = async (req, res, next) => {
+    try {
+        if (req.user.__type !== 'Admin') {
+            return res.status(403).json({ success: false, message: 'Not authorized as admin' });
+        }
+        next();
+    } catch (error) {
+        console.error(error);
+        res.status(403).json({ success: false, message: 'Not authorized as admin' });
+    }
+};
+
+module.exports = {
+    generateToken,
+    authenticate,
+    isAdmin
+};
